@@ -21,6 +21,7 @@ private void setIslast() {
 
 public void insert(String s) {
 	char last = 'a';
+	TriesNode current = root;
 	for (char c : s.toCharArray()) {
 		if (root.chlidren.size() == 0) {
 			// no root node yet, put this
@@ -30,13 +31,14 @@ public void insert(String s) {
 				TriesNode temp = new TriesNode();
 				temp.setValue(c);
 				root.chlidren.put(c, temp);
+				current = c;
 			}
 		}
-		last = c;
+		
 	}
 	TriesNode temp = new TriesNode();
 	temp.setIslast(True);
-	last.chlidren.put("", temp);
+	current.chlidren.put("", temp);
 }
 
 }
