@@ -1,0 +1,34 @@
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        help(res, new ArrayList<>(), s, 0);
+        return res;
+    }
+
+    private void help(List<List<String>> res, List<String> cur, String s, int l) {
+        if (cur.size() > 0 //the initial str could be palindrome
+                && l >= s.length()) {
+            res.add(new ArrayList<>(cur));
+        }
+        for (int i = l; i < s.length(); i++) {
+            if (isPalindrome(s, l, i)) {
+                if (l == i) {
+                    cur.add(Character.toString(s.charAt(i)));
+                } else {
+                    cur.add(s.substring(l, i + 1));
+                }
+                help(res, cur, s, i + 1);
+                cur.remove(cur.size() - 1);
+            }
+        }
+    }
+    
+    public boolean isPalindrome(String str, int l, int r){
+	        if(l==r) return true;
+	        while(l<r){
+	            if(str.charAt(l)!=str.charAt(r)) return false;
+	            l++;r--;
+	        }
+	        return true;
+	    }
+}
