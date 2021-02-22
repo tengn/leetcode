@@ -1,0 +1,35 @@
+class Solution {
+    public List<String> generateAbbreviations(String word) {
+        List<String> res = new ArrayList<>();
+        char[] data = word.toCharArray();
+        // for ()
+        help(res, data, 0, new StringBuilder(), 0);
+        return res;
+    }
+    
+    public void help(List<String> res, char[] data, int cur, StringBuilder sb, int numCount) {
+        if (cur == data.length) {
+            if (numCount > 0) {
+                sb.append(numCount);
+            }
+            res.add(sb.toString());
+            return;
+        }
+        
+        // add num
+        int len1 = sb.length();
+        help(res, data, cur + 1, sb, numCount + 1);
+        
+        sb.setLength(len1);
+        
+        // add char
+        if (numCount > 0) {
+            sb.append(numCount).append(data[cur]);
+            help(res, data, cur + 1, sb, 0);
+        } else {
+            sb.append(data[cur]);
+            help(res, data, cur + 1, sb, 0);
+        }
+        sb.setLength(len1);
+    }
+}
