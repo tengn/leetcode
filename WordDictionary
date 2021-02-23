@@ -1,0 +1,61 @@
+class WordDictionary {
+    private TrieNode root;
+    /** Initialize your data structure here. */
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+    
+    public void addWord(String word) {
+        TrieNode cur = root;
+        for (char c : word.toCharArray()) {
+            if (cur.children[c-'a'] == null) {
+                cur.children[c-'a'] = new TrieNode();
+            }
+            cur = cur.children[c-'a'];
+        }
+        cur.word = word;
+    }
+    
+    public boolean search(String word) {
+        TrieNode temp = root;
+        return help(word, temp, 0);
+    }
+    
+    public boolean help(String word, TrieNode tempRoot, int index) {
+        
+        if (tempRoot == null) {
+            return false;
+        }
+
+    
+        if (index == word.length()) {
+            return tempRoot.word != null;
+        }
+        char cur = word.charAt(index);
+        if (cur != '.') {
+            return tempRoot.children[cur - 'a'] != null && help(word, tempRoot.children[cur - 'a'] , index + 1);
+        } else {
+            for (TrieNode child : tempRoot.children) {
+                if (child != null && help(word, child, index + 1)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    
+    class TrieNode {
+        TrieNode[] children;
+        String word;
+        public TrieNode() {
+            children = new TrieNode[26];
+        }
+    }
+}
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord(word);
+ * boolean param_2 = obj.search(word);
+ */
