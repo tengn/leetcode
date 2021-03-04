@@ -1,0 +1,29 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node parent;
+};
+*/
+
+class Solution {
+    public Node lowestCommonAncestor(Node p, Node q) {
+        Node tempOne = p, tempTwo = q;
+        while (true) {
+            if (tempOne == tempTwo) {
+                return tempOne;
+            } else {
+                if (tempOne == null) {
+                    tempOne = q;
+                } else if (tempTwo == null) {
+                    tempTwo = p;
+                } else {
+                    tempOne = tempOne.parent;
+                    tempTwo = tempTwo.parent;
+                }
+            }
+        }
+    } 
+}
