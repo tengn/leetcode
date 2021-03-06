@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int findDistance(TreeNode root, int p, int q) {
+        // recursion
+        TreeNode lca = findLCA(root, p, q);
+        return distance(lca, p) + distance(lca, q);
+    }
+    
+    private TreeNode findLCA(TreeNode root, int p, int q) {
+        if (root == null || root.val == p || root.val == q) {
+            return root;
+        }
+        TreeNode left = findLCA(root.left, p, q), right = findLCA(root.right, p, q);
+        if (left != null && right != null) {
+            return root;
+        }
+        return left != null ? left : right;
+    }
+    
+    private int distance(TreeNode root, int val) {
+        if (root == null) {
+            return -1;
+        }
+        if (root.val == val) {
+            return 0;
+        }
+        int left = distance(root.left, val), right = distance(root.right, val);
+        if (left == -1 && right == -1) {
+            return -1;
+        } else if (left != -1) {
+            return left + 1;
+        } else {
+            return right + 1;
+        }
+    }
+}
