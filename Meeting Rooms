@@ -1,0 +1,12 @@
+class Solution {
+    public boolean canAttendMeetings(int[][] intervals) {
+        Arrays.sort(intervals, (i1, i2) -> i1[0] - i2[0]);
+        for (int i = 0, j = i+1; j < intervals.length; i++,j++) {
+            if (intervals[i][1] > intervals[j][0]) {
+                System.out.println(i + " " + j);
+                return false;
+            }
+        }
+        return true;
+    }
+}
