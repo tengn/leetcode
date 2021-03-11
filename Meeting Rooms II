@@ -1,0 +1,15 @@
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        Arrays.sort(intervals, (i1, i2) -> i1[0] - i2[0]);
+        PriorityQueue<int[]> data = new PriorityQueue<>((i1, i2) -> i1[1] - i2[1]);
+        int min = 0;
+        for (int[] interval : intervals) {
+            while (!data.isEmpty() && data.peek()[1] <= interval[0]) {
+                data.poll();
+            } 
+            data.add(interval);
+            min = Integer.max(min, data.size());
+        }
+        return min;
+    }
+}
