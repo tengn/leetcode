@@ -1,0 +1,25 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (i1, i2) -> i1[0] - i2[0]);
+        List<int[]> res = new ArrayList<>();
+        int len = intervals.length, start = 1;
+        int[] temp = intervals[0];
+        if (len == 1) {
+            res.add(temp);
+        }
+        while (start < len) {
+            if (intervals[start][0] <= temp[1]) {
+                temp[1] = Integer.max(temp[1], intervals[start++][1]);
+            } else {
+                res.add(temp);
+                temp = intervals[start++];
+                
+            }
+            if (start == len) {
+                res.add(temp);
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
+
+}
