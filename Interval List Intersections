@@ -1,0 +1,24 @@
+class Solution {
+    public int[][] intervalIntersection(int[][] one, int[][] two) {
+        int left = 0, right = 0;
+        int len1 = one.length, len2 = two.length;
+        List<int[]> res = new ArrayList<>();
+        while (left < len1 && right < len2) {
+            if (one[left][0] > two[right][1]) {
+                right++;
+            } else if (two[right][0] > one[left][1] ){
+                left++;
+            } else {
+                // has intersectino
+                res.add(new int[]{Integer.max(two[right][0], one[left][0]), Integer.min(two[right][1], one[left][1])});
+                if (two[right][1] < one[left][1]) {
+                    right++;
+                } else {
+                    left++;
+                }
+            }
+        }
+
+        return res.toArray(new int[res.size()][]);
+    }
+}
