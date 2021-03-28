@@ -1,0 +1,31 @@
+class Solution {
+    int M = (int)1e9+7;
+    public int maxSum(int[] nums1, int[] nums2) {
+        Map<Integer, List<Integer>> data = new HashMap<>();
+        for (int i = 0 ; i < nums1.length - 1; i++) {
+            data.computeIfAbsent(nums1[i], k-> new ArrayList<Integer>()).add(nums1[i+1]);
+        }
+        for (int i = 0 ; i < nums2.length - 1; i++) {
+            data.computeIfAbsent(nums2[i], k-> new ArrayList<>()).add(nums2[i+1]);
+            data.get(nums2[i]).add(nums2[i+1]);
+        }
+        Map<Integer, Long> values = new HashMap<>();
+        return (int)Math.max(help(nums1[0], data, values) % M, help(nums2[0], data, values) % M);
+    }
+    
+    private long help(int cur, Map<Integer, List<Integer>> data, Map<Integer, Long> values) {
+        if (values.containsKey(cur)) {
+            return values.get(cur);
+        }
+        if (!data.containsKey(cur)) {
+            return cur;
+        }
+        long maxSum = 0l;
+        for (int next : data.get(cur)) {
+            maxSum = Math.max(maxSum, help(next, data, values));
+        }
+        values.put(cur, maxSum+cur);
+        return maxSum + cur;
+    }
+
+}
