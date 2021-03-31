@@ -1,0 +1,24 @@
+class Solution {
+    public int splitArray(int[] nums, int m) {
+        int n = nums.length;
+        int[][] dp = new int[m+1][n];
+        int[] sums = new int[n];
+        for (int i = 0; i < n; i++) {
+            sums[i] = i == 0 ? nums[i] : nums[i] + sums[i-1];
+        }
+        for (int i = 0; i < n; i++) {
+            dp[1][i] = sums[i];
+        }
+        
+        for (int i = 2; i <=m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = 0; k < j; k++) {
+                    dp[i][j] = Integer.min(dp[i][j], Integer.max(dp[i - 1][k], sums[j] - sums[k]));
+                }
+            }
+        }
+        return dp[m][n-1];
+        
+    }
+}
