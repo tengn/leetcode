@@ -1,0 +1,31 @@
+import java.util.Collections;
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int max = piles[0];
+        for (int i : piles) {
+            max = Integer.max(max, i);
+        }
+        int min = 1;
+
+        while (min < max) {
+            int mid = min + (max - min) / 2;
+            int temp = getTime(mid, piles);
+            // System.out.println(temp + " " + mid + " " + min + " " + max);
+            if (temp > h) {
+                min = mid + 1;
+            } else {
+                max = mid;
+            }
+        }
+        return min;
+    }
+    
+    private int getTime(int speed, int[] piles) {
+        int res = 0;
+        for (int i : piles) {
+            res += i % speed == 0 ? i/speed : i/speed+1;
+        }
+        return res;
+    }
+}
