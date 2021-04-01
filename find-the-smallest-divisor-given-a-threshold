@@ -1,0 +1,26 @@
+class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        int max = nums[0];
+        for (int i : nums) {
+            max = Integer.max(max, i);
+        }
+        int left = 1, right = max; // left bound and right bound
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (divide(nums, mid) <= threshold) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return right;
+    }
+    
+    private int divide(int[] nums, int temp) {
+        int sum = 0;
+        for (int i : nums) {
+            sum += i % temp == 0 ? i / temp : i / temp + 1;
+        }
+        return sum;
+    }
+}
