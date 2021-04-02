@@ -1,0 +1,32 @@
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+        int left = 0, right = Integer.MAX_VALUE;
+        while (left < right) {
+            int temp = left + (right - left) / 2;
+            if (countBouquet(bloomDay, temp, k) < m) {
+                left = temp + 1;
+            } else {
+                right = temp;
+            }
+        }
+        return left == Integer.MAX_VALUE ? -1 : left;
+    }
+    
+    private int countBouquet(int[] num, int day, int k) {
+        int bouquets = 0, addjacent = 0;
+        for (int i : num) {
+            if (i <= day) {
+                addjacent++;
+            } else {
+                addjacent = 0;
+            }
+            
+            if (addjacent == k) {
+                addjacent = 0;
+                bouquets++;
+            }
+        }
+        // System.out.println(bouquets);
+        return bouquets;
+    }
+}
